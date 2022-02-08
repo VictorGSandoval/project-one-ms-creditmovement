@@ -26,8 +26,8 @@ public class CreditMovementController {
 	
 private final com.microservice.CreditMovement.service.CreditMovementService creditMovementService;
 	
-	@GetMapping(path = "/list")
-	public Mono<ResponseEntity<Flux<CreditMovement>>>getAllAccount() {
+	@GetMapping
+	public Mono<ResponseEntity<Flux<CreditMovement>>>getAllCreditMovement() {
 		Flux<CreditMovement> list=this.creditMovementService.getAllCreditMovement();
 		return  Mono.just(ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)
@@ -35,28 +35,28 @@ private final com.microservice.CreditMovement.service.CreditMovementService cred
 	}
 
 	@GetMapping("/details/{id}")
-	public Mono<ResponseEntity<CreditMovement>> getAccountById(@PathVariable String id){
+	public Mono<ResponseEntity<CreditMovement>> getCreditMovementById(@PathVariable String id){
 		var account=this.creditMovementService.getCreditMovementById(id);
 		return account.map(ResponseEntity::ok)
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
-	@PostMapping(path = "/create")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<CreditMovement> create(@RequestBody CreditMovement account){
 		return this.creditMovementService.createCreditMovement(account);
 	}
 
-	@PutMapping("update/{id}")
-	public Mono<ResponseEntity<CreditMovement>> updateAccountById(@PathVariable String id, @RequestBody CreditMovement transaction){
+	@PutMapping("/{id}")
+	public Mono<ResponseEntity<CreditMovement>> updateCreditMovementById(@PathVariable String id, @RequestBody CreditMovement transaction){
 
 		return this.creditMovementService.updateCreditMovement(id,transaction)
 				.map(ResponseEntity::ok)
 				.defaultIfEmpty(ResponseEntity.badRequest().build());
 	}
 
-	@DeleteMapping("delete/{id}")
-	public Mono<ResponseEntity<Void>> deleteAccountById(@PathVariable String id){
+	@DeleteMapping("/{id}")
+	public Mono<ResponseEntity<Void>> deleteCreditMovementById(@PathVariable String id){
 		return this.creditMovementService.deleteCreditMovement(id)
 				.map(r -> ResponseEntity.ok().<Void>build())
 				.defaultIfEmpty(ResponseEntity.notFound().build());
