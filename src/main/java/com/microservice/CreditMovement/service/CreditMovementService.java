@@ -39,8 +39,8 @@ public class CreditMovementService {
 	  }
 	  public Mono<CreditMovement> deleteCreditMovement(String id){
 	    return creditMovementRepository.findById(id)
-	            .flatMap(existsAccount -> creditMovementRepository.delete(existsAccount)
-	                    .then(Mono.just(existsAccount)));
+	            .flatMap(existsCreditMovement -> creditMovementRepository.delete(existsCreditMovement)
+	                    .then(Mono.just(existsCreditMovement)));
 	  }
 
 

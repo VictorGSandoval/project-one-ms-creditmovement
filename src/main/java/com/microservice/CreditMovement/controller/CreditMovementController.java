@@ -34,10 +34,10 @@ private final com.microservice.CreditMovement.service.CreditMovementService cred
 				.body(list));
 	}
 
-	@GetMapping("/details/{id}")
+	@GetMapping("/{id}")
 	public Mono<ResponseEntity<CreditMovement>> getCreditMovementById(@PathVariable String id){
-		var account=this.creditMovementService.getCreditMovementById(id);
-		return account.map(ResponseEntity::ok)
+		var creditMovement=this.creditMovementService.getCreditMovementById(id);
+		return creditMovement.map(ResponseEntity::ok)
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
@@ -48,9 +48,9 @@ private final com.microservice.CreditMovement.service.CreditMovementService cred
 	}
 
 	@PutMapping("/{id}")
-	public Mono<ResponseEntity<CreditMovement>> updateCreditMovementById(@PathVariable String id, @RequestBody CreditMovement transaction){
+	public Mono<ResponseEntity<CreditMovement>> updateCreditMovementById(@PathVariable String id, @RequestBody CreditMovement creditMovement){
 
-		return this.creditMovementService.updateCreditMovement(id,transaction)
+		return this.creditMovementService.updateCreditMovement(id,creditMovement)
 				.map(ResponseEntity::ok)
 				.defaultIfEmpty(ResponseEntity.badRequest().build());
 	}
